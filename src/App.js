@@ -104,6 +104,8 @@ function App() {
         <p> Email :{user.email} </p>
         <p>password {user.password} :</p>
         <p>Name :{user.name}</p>
+        <p>Name :{user.name}</p>
+        <p>Name :{user.name}</p>
       <h1> Our Own Authintication</h1>
       <input type="text" name='name' onBlur={handleChange}  placeholder='Your name' />
       <br />
