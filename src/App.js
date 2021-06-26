@@ -10,7 +10,7 @@ firebase.initializeApp(firebaseConfig);
 function App() {
   const [user ,setUser]=useState({
     isSignIN :false,
-    name :'',
+    name :' ',
     email :'',
     photo :'',
     password:''
@@ -50,7 +50,7 @@ function App() {
     .then((res) => {
        const signOutUser={
         isSignIN :false,
-        name :'',
+        name :' ',
         email :'',
         photo :'',
         password:''
@@ -64,11 +64,16 @@ function App() {
    }
 
 
-   const handleSubmit =()=>{
-
+   const handleSubmit =(e)=>{   
+    console.log(user.email ,user.password); 
+    if(user.email && user.password){
+ console.log('ekfewfujk');
+    }
+    e.preventDefault();
    }
+  
    const handleChange=(e)=>{
-      let isFormValid ;
+      let isFormValid =true ;
       if(e.target.name==='email'){
              isFormValid = /\S+@\S+\.\S+/.test(e.target.value)
       }
@@ -79,9 +84,14 @@ function App() {
       }
       if(isFormValid){
           const newUserInfo ={...user}
+       
           newUserInfo[e.target.name] = e.target.value ;
           setUser(newUserInfo)
-      }
+         
+      }  
+
+       
+   
    }
 
     
@@ -100,14 +110,10 @@ function App() {
 }
 
       <form  onSubmit={handleSubmit}>
-        
-        <p> Email :{user.email} </p>
-        <p>password {user.password} :</p>
-        <p>Name :{user.name}</p>
-        <p>Name :{user.name}</p>
-        <p>Name :{user.name}</p>
+      
+         
       <h1> Our Own Authintication</h1>
-      <input type="text" name='name' onBlur={handleChange}  placeholder='Your name' />
+      <input type="text" name='name'  onBlur={ handleChange} placeholder='Your name'   />
       <br />
        <input type="email" name="email" onBlur={handleChange} placeholder='your email address' required/> <br />
        <input type="password" name="password" onBlur={handleChange} required placeholder ='your password'/>
