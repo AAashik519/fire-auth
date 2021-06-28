@@ -6,7 +6,13 @@ import firebaseConfig from './firebase.config'
 import { useState } from 'react';
 
 
-firebase.initializeApp(firebaseConfig);
+ 
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}else {
+  firebase.app(); // if already initialized, use that one
+}
 function App() {
   const [newUser,setNewUser] =useState(false)
   const [user, setUser] = useState({
@@ -178,6 +184,30 @@ function App() {
     });
   }
 
+  var gitProvider = new firebase.auth.GithubAuthProvider();
+  const handelSignInGit= ()=>{
+    firebase
+  .auth()
+  .signInWithPopup(gitProvider)
+  .then((result) => {
+    
+    var credential = result.credential;
+    var token = credential.accessToken;
+    var user = result.user;
+    console.log(user);
+  }).catch((error) => {
+   
+    var errorCode = error.code;
+    var errorMessage = error.message;
+   
+    var email = error.email;
+    
+    var credential = error.credential;
+    console.log(errorCode ,errorMessage ,email ,credential);
+  });
+
+  }
+
   return (
     <div className="App">
       {user.isSignIN ?
@@ -185,7 +215,10 @@ function App() {
       }
       <br />
       <br />
-      { <button onClick={handleFbSignIN}> FaceBook Login</button> }
+      { <button onClick={handleFbSignIN}> FaceBook Login</button> } 
+      <br />
+      <br />
+      { <button onClick={handelSignInGit}>  GitHub  Login</button> }
       {
         user.isSignIN && <div>
           <p> welcome , {user.name} </p>
